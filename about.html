@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 时尚助手 - 关于我们</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .about-hero {
+      background: url('https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+      background-size: cover;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      color: white;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+    .about-hero-content {
+      z-index: 2;
+      max-width: 800px;
+      padding: 20px;
+    }
+    .about-hero-content h1 {
+      font-size: 3.75rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.025em;
+    }
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    .section-container h2 {
+      font-size: 2.75rem;
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 40px;
+      font-weight: 600;
+    }
+    .intro-card, .features-card, .team-card, .contact-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+    .intro-card:hover, .features-card:hover, .team-card:hover, .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    .intro-card p, .features-card p, .team-card p, .contact-card p {
+      color: #4b5563;
+      font-size: 1.125rem;
+      line-height: 1.75;
+    }
+    .features-list {
+      list-style: none;
+      padding: 0;
+    }
+    .features-list li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      color: #4b5563;
+    }
+    .features-list li i {
+      color: #60a5fa;
+      font-size: 1.5rem;
+      margin-right: 15px;
+      margin-top: 5px;
+    }
+    .contact-card a {
+      color: #60a5fa;
+      transition: color 0.3s ease;
+    }
+    .contact-card a:hover {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+    /* 团队成员样式 */
+    .team-member {
+      text-align: center;
+      position: relative;
+    }
+    .team-member img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #60a5fa;
+      transition: transform 0.3s ease;
+    }
+    .team-member:hover img {
+      transform: scale(1.1);
+    }
+    .team-member p.role {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-top: 8px;
+    }
+    .team-member .details {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      font-size: 0.85rem;
+      color: #4b5563;
+      width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      transform: translate(-50%, 10px);
+      z-index: 10;
+    }
+    .team-member:hover .details {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+    /* 夜间模式样式 */
+    .night-mode {
+      background: none;
+    }
+    .night-mode-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .night-mode .night-mode-bg {
+      opacity: 1;
+    }
+    .night-mode-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(8px) brightness(0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .night-mode-bg img.active {
+      opacity: 1;
+    }
+    .night-mode-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .night-mode .night-mode-overlay {
+      opacity: 1;
+    }
+    .night-mode .section-container h2 {
+      color: #e5e7eb;
+    }
+    .night-mode .intro-card,
+    .night-mode .features-card,
+    .night-mode .team-card,
+    .night-mode .contact-card {
+      background: #374151;
+    }
+    .night-mode .intro-card p,
+    .night-mode .features-card p,
+    .night-mode .team-card p,
+    .night-mode .contact-card p {
+      color: #d1d5db;
+    }
+    .night-mode .features-list li {
+      color: #d1d5db;
+    }
+    .night-mode .features-list li i {
+      color: #93c5fd;
+    }
+    .night-mode .contact-card a {
+      color: #93c5fd;
+    }
+    .night-mode .contact-card a:hover {
+      color: #60a5fa;
+    }
+    .night-mode .team-member p.role {
+      color: #d1d5db;
+    }
+    .night-mode .team-member .details {
+      background: #4b5563;
+      color: #e5e7eb;
+    }
+    .night-mode .team-member img {
+      border-color: #93c5fd;
+    }
+    .night-mode .footer {
+      background: #111827;
+    }
+    .toggle-night-mode {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #60a5fa;
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .toggle-night-mode:hover {
+      transform: rotate(12deg);
+    }
+  </style>
+</head>
+<body>
+  <!-- 夜间模式背景 -->
+  <div class="night-mode-bg">
+    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Fashion 1">
+    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Fashion 2">
+    <img src="https://images.unsplash.com/photo-1483985988355-763728e01a71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Fashion 3">
+  </div>
+  <div class="night-mode-overlay"></div>
+
+  <!-- 夜间模式切换按钮 -->
+  <button class="toggle-night-mode" onclick="toggleNightMode()" title="切换夜间模式">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- 英雄区 -->
+  <section class="about-hero animate__animated animate__fadeIn">
+    <div class="about-hero-content">
+      <h1 class="animate__animated animate__zoomIn">关于我们</h1>
+    </div>
+  </section>
+
+  <!-- 项目简介 -->
+  <section class="section-container">
+    <h2 class="animate__animated animate__fadeInDown">项目简介</h2>
+    <div class="intro-card animate__animated animate__fadeInUp">
+      <p>
+        AI 时尚助手是一个创新的智能穿搭平台，致力于为普通消费者和内容创作者提供个性化的时尚解决方案。我们通过先进的人工智能技术，结合全球潮流趋势，为用户提供从灵感到执行的完整穿搭体验，助力每一个人展现独特风格。
+      </p>
+    </div>
+  </section>
+
+  <!-- 核心功能 -->
+  <section class="section-container">
+    <h2 class="animate__animated animate__fadeInDown">核心功能</h2>
+    <div class="features-card animate__animated animate__fadeInUp">
+      <p class="mb-6">
+        本项目致力于构建一个面向普通消费者和内容创作者的智能穿搭网站，利用多智能体工作流机制、语义驱动搜索增强与图文联动生成等关键技术，为用户提供结构化、情境化、个性化的穿搭建议，真正打通从“灵感”到“执行”的穿搭决策链路。平台将在语义理解、内容生成、推荐调度与图像可视化方面形成整体闭环，并具备多模态交互与自我进化能力，具有广阔的市场前景和社会价值。
+      </p>
+      <ul class="features-list">
+        <li><i class="fas fa-code"></i>采用 Flask + HTML/CSS 实现后端服务与前端展示，轻量易部署。</li>
+        <li><i class="fas fa-brain"></i>利用 ZhipuAI 接口接入 GLM-4 模型，生成上下文感知的时尚搭配建议。</li>
+        <li><i class="fas fa-search"></i>搜索模块基于 SerpAPI 抓取真实网页数据，提升推荐可信度。</li>
+        <li><i class="fas fa-image"></i>图像展示模块结合了预设样图或支持外部图像生成 API。</li>
+        <li><i class="fas fa-file-export"></i>支持导出搭配建议报告，适配内容写作或风格归档场景。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 团队介绍 -->
+  <section class="section-container">
+    <h2 class="animate__animated animate__fadeInDown">团队介绍</h2>
+    <div class="team-card animate__animated animate__fadeInUp">
+      <p class="mb-6">
+        本系统由杭州电子科技大学计算机科学与技术专业学生开发，开发团队由 5 名成员组成，分别负责前端设计、后端开发、模型调用与交互逻辑设计等部分。在项目中，团队注重实用性与可拓展性的结合，希望为时尚科技与 AI 场景融合提供有价值的参考样例。
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+        <div class="team-member">
+          <img src="images/member1.jpg" alt="Member 1" loading="lazy">
+          <p class="role">前端设计</p>
+          <div class="details">
+            负责界面设计与交互体验，使用 Tailwind CSS 打造现代化的用户界面。
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="images/member2.jpg" alt="Member 2" loading="lazy">
+          <p class="role">后端开发</p>
+          <div class="details">
+            搭建 Flask 后端服务，处理 API 请求和数据逻辑。
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="images/member3.jpg" alt="Member 3" loading="lazy">
+          <p class="role">模型调用</p>
+          <div class="details">
+            集成 ZhipuAI GLM-4 模型，实现智能穿搭推荐。
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="images/member4.jpg" alt="Member 4" loading="lazy">
+          <p class="role">交互逻辑</p>
+          <div class="details">
+            设计用户交互流程，确保推荐结果流畅且直观。
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="images/member5.jpg" alt="Member 5" loading="lazy">
+          <p class="role">数据处理</p>
+          <div class="details">
+            基于 SerpAPI 优化搜索模块，提升推荐可信度。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系方式与引用鸣谢 -->
+  <section class="section-container">
+    <h2 class="animate__animated animate__fadeInDown">联系方式与引用鸣谢</h2>
+    <div class="contact-card animate__animated animate__fadeInUp">
+      <p>
+        我们欢迎任何反馈与合作机会！您可以通过以下方式联系我们：<br>
+        <a href="mailto:1439748794@qq.com">1439748794@qq.com</a>
+      </p>
+      <p class="mt-6">
+        特别鸣谢以下资源与技术支持：<br>
+        - Tailwind CSS：提供高效的前端样式框架。<br>
+        - Font Awesome：提供优雅的图标支持。<br>
+        - Unsplash：提供高质量的时尚图片素材。<br>
+        - ZhipuAI & SerpAPI：为智能推荐与搜索功能提供强大支持。
+      </p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <p>© 2025 AI 时尚助手. 保留所有权利。</p>
+  </footer>
+
+  <script>
+    let nightModeInterval;
+
+    function toggleNightMode() {
+      document.body.classList.toggle('night-mode');
+      const isNightMode = document.body.classList.contains('night-mode');
+      localStorage.setItem('nightMode', isNightMode);
+      if (isNightMode) {
+        startNightModeBackground();
+      } else {
+        stopNightModeBackground();
+      }
+    }
+
+    function startNightModeBackground() {
+      const bgImages = document.querySelectorAll('.night-mode-bg img');
+      let currentIndex = 0;
+
+      function updateBackground() {
+        bgImages.forEach((img, index) => {
+          img.classList.remove('active');
+          if (index === currentIndex) {
+            img.classList.add('active');
+          }
+        });
+        currentIndex = (currentIndex + 1) % bgImages.length;
+      }
+
+      updateBackground();
+      nightModeInterval = setInterval(updateBackground, 5000);
+    }
+
+    function stopNightModeBackground() {
+      clearInterval(nightModeInterval);
+    }
+
+    if (localStorage.getItem('nightMode') === 'true') {
+      toggleNightMode();
+    }
+  </script>
+</body>
+</html>
